@@ -4,11 +4,11 @@ A Python tool to convert PNG logos to SVG format with optional background remova
 
 ## Features
 
-- 🎨 Convert PNG images to scalable SVG format
-- 🔲 Optional background removal
-- ⚙️ Customizable conversion parameters
-- 🚀 Built with `vtracer` (fast Rust-based vectorization)
-- 🎯 Optimized for logos and icons
+- Convert PNG images to scalable SVG format
+- Optional background removal
+- Customizable conversion parameters
+- Built with `vtracer` (fast Rust-based vectorization)
+- Optimized for logos and icons
 
 ## Installation
 
@@ -28,78 +28,135 @@ poetry run python converter.py input.png output.svg
 
 # Keep the background
 poetry run python converter.py input.png output.svg --keep-bg
-
-# Disable quality enhancement for faster processing
-poetry run python converter.py input.png output.svg --no-enhance
 ```
 
-### Advanced Options
+### Quality Modes
+
+The converter has three quality modes:
+
+#### 1. Standard Mode (Fast)
+```bash
+poetry run python converter.py logo.png logo.svg --no-enhance
+```
+- Fastest processing
+- Good for simple logos
+- No preprocessing
+
+#### 2. Enhanced Mode (Default - Recommended)
+```bash
+poetry run python converter.py logo.png logo.svg
+```
+- Balanced quality and speed
+- Applies sharpening and contrast enhancement
+- Best for most logos
+
+#### 3. Ultra Quality Mode (Best Results)
+```bash
+poetry run python converter.py logo.png logo.svg --ultra-quality
+```
+- Maximum quality preprocessing
+- Gaussian blur + unsharp mask + enhanced contrast
+- Best for production logos
+- 2-3x slower but worth it!
+
+### Ultra Quality with Custom Parameters
+
+For absolute best results, combine ultra quality with optimized parameters:
 
 ```bash
-# Use binary color mode (black and white only - for QR codes, line art)
-poetry run python converter.py logo.png logo.svg --colormode binary
-
-# Fine-tune quality settings
 poetry run python converter.py logo.png logo.svg \
+  --ultra-quality \
   --filter-speckle 16 \
   --color-precision 8 \
-  --layer-difference 24
+  --layer-difference 48
+```
+
+### Other Options
+
+```bash
+# Binary mode (black and white only - for QR codes, line art)
+poetry run python converter.py logo.png logo.svg --colormode binary --filter-speckle 16
+
+# Fine-tune individual parameters
+poetry run python converter.py logo.png logo.svg \
+  --filter-speckle 12 \
+  --color-precision 7 \
+  --layer-difference 32
 ```
 
 ### Available Options
 
+**Quality Control:**
+- `--no-enhance`: Disable quality enhancement (enabled by default)
+- `--ultra-quality`: Apply maximum quality preprocessing (slower, best results)
+
+**Background & Color:**
 - `--keep-bg`: Keep the background (don't remove it)
-- `--enhance-quality`: Apply preprocessing (sharpening, contrast) to improve vectorization
 - `--colormode {color,binary}`: Color mode (default: color)
-- `--hierarchical {stacked,cutout}`: Hierarchical grouping mode (default: stacked)
-- `--mode {spline,polygon,none}`: Conversion mode (default: spline)
-- `--filter-speckle N`: Suppress speckles of size N or smaller, 0-255 (default: 4)
-- `--color-precision N`: Number of significant bits for RGB, 1-8 (default: 6)
-- `--layer-difference N`: Color difference threshold, 0-255 (default: 16)
+
+**Vectorization Parameters:**
+- `--filter-speckle N`: Suppress speckles of size N or smaller, 0-255 (default: 12)
+- `--color-precision N`: Number of significant bits for RGB, 1-8 (default: 7)
+- `--layer-difference N`: Color difference threshold, 0-255 (default: 32)
 - `--corner-threshold N`: Corner detection threshold, 0-180 (default: 60)
 - `--length-threshold N`: Curve length threshold (default: 4.0)
 - `--max-iterations N`: Maximum iterations for optimization (default: 10)
 - `--splice-threshold N`: Splice angle threshold, 0-180 (default: 45)
 - `--path-precision N`: Path precision (default: 8)
 
+**Advanced:**
+- `--hierarchical {stacked,cutout}`: Hierarchical grouping mode (default: stacked)
+- `--mode {spline,polygon,none}`: Conversion mode (default: spline)
+
 ## Quality Tips
 
-### For Logos with Background Removal
+### Recommended Settings by Use Case
 
-Background removal can sometimes introduce artifacts around edges. Here are strategies to improve quality:
-
-**1. Use Binary Mode for Simple Logos**
-```bash
-poetry run python converter.py logo.png logo.svg --colormode binary --filter-speckle 16
-```
-Binary mode works best for logos with solid colors and produces much smaller files.
-
-**2. Increase Speckle Filtering**
-```bash
-poetry run python converter.py logo.png logo.svg --filter-speckle 12
-```
-Higher values (8-16) remove more noise and artifacts from background removal.
-
-**3. Reduce Color Precision**
-```bash
-poetry run python converter.py logo.png logo.svg --color-precision 5 --layer-difference 32
-```
-Lower precision groups similar colors together, reducing fuzzy edges.
-
-**4. Use Quality Enhancement**
-```bash
-poetry run python converter.py logo.png logo.svg --enhance-quality --filter-speckle 12
-```
-Applies sharpening and contrast enhancement before vectorization.
-
-**5. Combine Multiple Settings**
+#### Production Logos (Best Quality)
 ```bash
 poetry run python converter.py logo.png logo.svg \
-  --enhance-quality \
-  --filter-speckle 12 \
-  --color-precision 7 \
-  --layer-difference 32
+  --ultra-quality \
+  --filter-speckle 16 \
+  --color-precision 8 \
+  --layer-difference 48
 ```
+**Best for:** Final production logos, brand assets  
+**Results:** Cleanest edges, best color separation, smallest file size  
+**Processing time:** 3-5 seconds
+
+#### General Purpose (Default)
+```bash
+poetry run python converter.py logo.png logo.svg
+```
+**Best for:** Most logos and icons  
+**Results:** Good quality, fast processing  
+**Processing time:** 2-3 seconds
+
+#### Quick Conversion
+```bash
+poetry run python converter.py logo.png logo.svg --no-enhance
+```
+**Best for:** Testing, previews, simple shapes  
+**Results:** Basic quality, fastest processing  
+**Processing time:** 1-2 seconds
+
+### Troubleshooting Quality Issues
+
+**Problem: Fuzzy or mixed colors around edges**
+- Solution: Use `--ultra-quality --filter-speckle 16 --layer-difference 48`
+
+**Problem: Too many colors/large file size**
+- Solution: Reduce `--color-precision 6` or increase `--layer-difference 40`
+
+**Problem: Lost detail in complex areas**
+- Solution: Increase `--color-precision 8` and decrease `--filter-speckle 8`
+
+**Problem: Jagged edges**
+- Solution: Use `--ultra-quality` and increase `--corner-threshold 90`
+
+### Advanced Tips
+
+For more detailed quality optimization, see [ULTRA_QUALITY.md](ULTRA_QUALITY.md)
 
 ## How It Works
 
