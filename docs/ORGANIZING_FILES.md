@@ -1,6 +1,6 @@
 # Organizing Generated Files
 
-By default, the converter saves SVG files to the same location you specify. To keep your project organized, you can use the `--output-dir` (or `-o`) flag to automatically save all generated SVGs to a specific directory.
+By default, the converter saves SVG files to the same location you specify. To keep your project organized, you can use the `--output-dir` (or `-o`) flag to automatically save all generated SVGs to a specific directory. Please first create a directory called `generated` in the root of your project.
 
 ## Using Output Directory
 
