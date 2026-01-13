@@ -48,7 +48,7 @@ poetry run python converter.py logo.png logo.svg --no-enhance
 - Good for simple logos
 - No preprocessing
 
-#### 2. Enhanced Mode (Default - Recommended)
+#### 2. Default Mode
 ```bash
 poetry run python converter.py logo.png logo.svg
 ```
@@ -56,7 +56,7 @@ poetry run python converter.py logo.png logo.svg
 - Applies sharpening and contrast enhancement (1.2x)
 - Best for most logos
 
-#### 3. Ultra Quality Mode (Best Results)
+#### 3. Ultra Quality Mode (Recommended)
 ```bash
 poetry run python converter.py logo.png logo.svg --ultra-quality
 ```
@@ -130,7 +130,7 @@ poetry run python converter.py logo.png logo.svg \
 **Results:** Cleanest edges, best color separation, smallest file size  
 **Processing time:** 3-5 seconds
 
-#### General Purpose (Default)
+#### General Purpose
 ```bash
 poetry run python converter.py logo.png logo.svg
 ```
