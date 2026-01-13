@@ -1,4 +1,4 @@
-# PNG to SVG Converter
+# PNG to SVG Converter created for @datatribe-collective-labs
 
 A Python tool to convert PNG logos to SVG format with optional background removal.
 
@@ -179,4 +179,3 @@ For more detailed quality optimization, see [ULTRA_QUALITY.md](ULTRA_QUALITY.md)
 ## License
 
 MIT
-# datatribe-vectorizer
