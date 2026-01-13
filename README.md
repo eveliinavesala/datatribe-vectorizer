@@ -12,11 +12,19 @@ A Python tool to convert PNG logos to SVG format with optional background remova
 
 ## Installation
 
-This project uses Poetry for dependency management:
+This project uses [Poetry](https://python-poetry.org/) for dependency management:
 
+Download and install Poetry
+```bash
+curl -sSL https://install.python-poetry.org | python3 -
+```
+
+Then cd into the project directory and install dependencies:
 ```bash
 poetry install
 ```
+
+If ran into any issues, see [Poetry docs](https://python-poetry.org/docs/).
 
 ## Usage
 
@@ -162,7 +170,7 @@ poetry run python converter.py logo.png logo.svg --no-enhance
 
 ### Advanced Tips
 
-For more detailed quality optimization, see [ULTRA_QUALITY.md](ULTRA_QUALITY.md)
+For more detailed quality optimization, see [ULTRA_QUALITY.md](/docs/ULTRA_QUALITY.md)
 
 ## How It Works
 
