@@ -29,11 +29,8 @@ generated/
 *.svg
 *.png
 !test_logo.png
+!test_logo*
 
 # OS
 .DS_Store
 Thumbs.db
-
-# Test outputs
-test_logo_*.svg
-test_logo_*.png
