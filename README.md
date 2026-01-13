@@ -28,6 +28,12 @@ poetry run python converter.py input.png output.svg
 
 # Keep the background
 poetry run python converter.py input.png output.svg --keep-bg
+
+# Output to a specific directory (auto-generates filename)
+poetry run python converter.py input.png --output-dir generated
+
+# Short form
+poetry run python converter.py input.png -o generated
 ```
 
 ### Quality Modes

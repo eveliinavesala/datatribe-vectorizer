@@ -202,7 +202,13 @@ Examples:
     
     parser.add_argument(
         "output",
-        help="Path to output SVG file"
+        nargs="?",
+        help="Path to output SVG file (optional if --output-dir is specified)"
+    )
+    
+    parser.add_argument(
+        "-o", "--output-dir",
+        help="Output directory for generated SVG files (default: current directory)"
     )
     
     parser.add_argument(
@@ -302,10 +308,25 @@ Examples:
     
     args = parser.parse_args()
     
+    # Determine output path
+    if args.output_dir:
+        # Create output directory if it doesn't exist
+        os.makedirs(args.output_dir, exist_ok=True)
+        
+        # Generate output filename from input filename
+        input_basename = os.path.basename(args.input)
+        output_filename = os.path.splitext(input_basename)[0] + '.svg'
+        output_path = os.path.join(args.output_dir, output_filename)
+    elif args.output:
+        output_path = args.output
+    else:
+        print("Error: Either output path or --output-dir must be specified", file=sys.stderr)
+        sys.exit(1)
+    
     try:
         convert_to_svg(
             input_path=args.input,
-            output_path=args.output,
+            output_path=output_path,
             remove_background=not args.keep_bg,
             colormode=args.colormode,
             hierarchical=args.hierarchical,
