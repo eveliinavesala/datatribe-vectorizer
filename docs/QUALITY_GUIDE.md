@@ -24,18 +24,17 @@ poetry run python converter.py logo.png logo.svg --colormode binary --filter-spe
 - Only works well for logos with solid colors
 
 #### Best for Multi-Color Logos
-**Enhanced Quality Mode** - Good balance of quality and file size
+**Enhanced Quality Mode (Default)** - Good balance of quality and file size
 ```bash
 poetry run python converter.py logo.png logo.svg \
-  --enhance-quality \
   --filter-speckle 12 \
   --color-precision 7 \
   --layer-difference 32
 ```
 - Preserves multiple colors
-- Reduces artifacts through preprocessing
+- Reduces artifacts through preprocessing (enabled by default)
 - Moderate file size (8.7 KB)
-- Better edge quality than default
+- Better edge quality than standard mode
 
 #### For Logos with Background (No Removal Needed)
 **Keep Background Mode** - Best when background is part of the design
@@ -71,7 +70,8 @@ Converts to pure black and white (no grays).
 - Best for: Simple logos, icons, line art
 - Not suitable for: Gradients, photos, multi-color designs
 
-### `--enhance-quality`
-Applies preprocessing (sharpening + contrast enhancement).
-- Helps with: Fuzzy edges from background removal
-- May help: Improve edge detection for vectorization
+### `--no-enhance`
+Disables quality enhancement preprocessing (enabled by default).
+- Default behavior: Applies sharpening + contrast (1.2x) enhancement
+- Use `--no-enhance` for: Fastest processing, simple shapes
+- Use `--ultra-quality` for: Maximum quality with Gaussian blur + unsharp mask + contrast (1.4x) + color saturation (1.1x)

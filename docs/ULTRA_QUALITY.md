@@ -17,9 +17,11 @@ poetry run python converter.py input.png output.svg \
 The `--ultra-quality` flag applies advanced image preprocessing:
 
 1. **Gaussian Blur (0.5 radius)** - Reduces noise and artifacts from background removal
-2. **Unsharp Mask** - Enhances edge definition and sharpness
+2. **Unsharp Mask (radius=2, percent=150, threshold=3)** - Enhances edge definition and sharpness
 3. **Contrast Enhancement (1.4x)** - Makes edges more distinct for better vectorization
 4. **Color Saturation (1.1x)** - Slightly boosts colors for better color separation
+
+**Note:** Quality enhancement is enabled by default. Use `--no-enhance` to disable all preprocessing for fastest conversion.
 
 ## Parameter Recommendations by Use Case
 

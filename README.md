@@ -53,7 +53,7 @@ poetry run python converter.py logo.png logo.svg --no-enhance
 poetry run python converter.py logo.png logo.svg
 ```
 - Balanced quality and speed
-- Applies sharpening and contrast enhancement
+- Applies sharpening and contrast enhancement (1.2x)
 - Best for most logos
 
 #### 3. Ultra Quality Mode (Best Results)
@@ -61,7 +61,7 @@ poetry run python converter.py logo.png logo.svg
 poetry run python converter.py logo.png logo.svg --ultra-quality
 ```
 - Maximum quality preprocessing
-- Gaussian blur + unsharp mask + enhanced contrast
+- Gaussian blur (0.5) + unsharp mask + contrast (1.4x) + color saturation (1.1x)
 - Best for production logos
 - 2-3x slower but worth it!
 
